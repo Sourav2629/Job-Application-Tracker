@@ -17,7 +17,10 @@ A full-stack web application for tracking job applications with user authenticat
 
 ## Screenshots
 
-> _Add screenshots of the dashboard, job form, and mobile view here._
+![Screenshot 2025-06-20 013154](https://github.com/user-attachments/assets/3d2f48c0-e398-42ee-b1cf-4c6fae69c116)
+![Screenshot 2025-06-20 013001](https://github.com/user-attachments/assets/a38ae761-b27c-4005-bf97-bfb3429b6cf6)
+![Screenshot 2025-06-20 013100](https://github.com/user-attachments/assets/4d8d0952-5cb1-4746-af79-f9a3748555a2)
+
 
 ## Tech Stack
 
