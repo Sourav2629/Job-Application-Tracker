@@ -33,7 +33,7 @@ const AuthState = props => {
     }
 
     try {
-      const res = await axios.get('/api/auth/me');
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/me`);
 
       dispatch({
         type: USER_LOADED,
@@ -53,7 +53,7 @@ const AuthState = props => {
     };
 
     try {
-      const res = await axios.post('/api/auth/register', formData, config);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, formData, config);
 
       dispatch({
         type: REGISTER_SUCCESS,
@@ -82,7 +82,7 @@ const AuthState = props => {
     };
 
     try {
-      const res = await axios.post('/api/auth/login', formData, config);
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, formData, config);
 
       dispatch({
         type: LOGIN_SUCCESS,
