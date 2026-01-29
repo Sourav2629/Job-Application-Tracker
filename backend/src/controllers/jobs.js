@@ -99,6 +99,30 @@ exports.updateJob = async (req, res) => {
       });
     }
 
+    // ✅ ADD THIS BLOCK (STATUS VALIDATION)
+    const STATUS_ORDER = {
+      Applied: 1,
+      Interview: 2,
+      Offer: 3,
+      Accepted: 4,
+      Rejected: 4
+    };
+
+    const currentStatus = job.status;
+    const newStatus = req.body.status;
+
+    // Prevent backward status change
+    if (
+      newStatus &&
+      STATUS_ORDER[newStatus] < STATUS_ORDER[currentStatus]
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: `Cannot change status from ${currentStatus} back to ${newStatus}`
+      });
+    }
+
+    // Proceed with update
     job = await Job.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
@@ -115,6 +139,7 @@ exports.updateJob = async (req, res) => {
     });
   }
 };
+
 
 // @desc    Delete job
 // @route   DELETE /api/jobs/:id
