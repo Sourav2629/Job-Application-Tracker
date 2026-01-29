@@ -107,28 +107,35 @@ const JobState = props => {
   };
 
   // Update Job
-  const updateJob = async job => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
-    try {
-      setLoading();
-      const res = await axios.put(`/api/jobs/${job._id}`, job, config);
-
-      dispatch({
-        type: UPDATE_JOB,
-        payload: res.data.data
-      });
-    } catch (err) {
-      dispatch({
-        type: JOB_ERROR,
-        payload: err.response.data.message
-      });
+ // Update Job
+const updateJob = async job => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
     }
   };
+
+  try {
+    setLoading();
+    const res = await axios.put(`/api/jobs/${job._id}`, job, config);
+
+    dispatch({
+      type: UPDATE_JOB,
+      payload: res.data.data
+    });
+
+    return res.data;
+  } catch (err) {
+    dispatch({
+      type: JOB_ERROR,
+      payload: err.response?.data?.message || 'Update failed'
+    });
+
+    // 🔥 THIS LINE IS THE KEY
+    throw err;
+  }
+};
+
 
   // Clear Jobs
   const clearJobs = () => {
