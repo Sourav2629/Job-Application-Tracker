@@ -26,16 +26,15 @@ try {
   } else {
     console.log('.env file not found, using fallback values');
     // Set fallback values
-    process.env.JWT_SECRET = 'fallbacksecretkey123456789';
-    process.env.PORT = '5000';
-    process.env.JWT_EXPIRE = '30d';
+    process.env.JWT_SECRET = process.env.JWT_SECRET || 'fallbacksecretkey123456789';
+    process.env.JWT_EXPIRE = process.env.JWT_EXPIRE || '30d';
   }
 } catch (err) {
   console.error('Error loading .env file:', err);
   // Set fallback values
-  process.env.JWT_SECRET = 'fallbacksecretkey123456789';
-  process.env.PORT = '5000';
-  process.env.JWT_EXPIRE = '30d';
+   process.env.JWT_SECRET = process.env.JWT_SECRET || 'fallbacksecretkey123456789';
+    process.env.JWT_EXPIRE = process.env.JWT_EXPIRE || '30d';
+   
 }
 
 // Verify environment variables are loaded
