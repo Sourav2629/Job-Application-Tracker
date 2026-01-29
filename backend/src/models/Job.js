@@ -45,4 +45,9 @@ const JobSchema = new mongoose.Schema({
   }
 });
 
+JobSchema.index({ user: 1 });
+JobSchema.index({ status: 1 });
+JobSchema.index({ companyName: 1 });
+
+
 module.exports = mongoose.model('Job', JobSchema); 
