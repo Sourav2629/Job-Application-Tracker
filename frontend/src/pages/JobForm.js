@@ -50,25 +50,30 @@ const JobForm = () => {
 
   const onChange = e => setJob({ ...job, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
-    e.preventDefault();
-    
-    if (companyName === '' || role === '') {
-      toast.error('Please fill in company name and role');
-      return;
-    }
+  const onSubmit = async e => {
+  e.preventDefault();
 
+  if (companyName === '' || role === '') {
+    toast.error('Please fill in company name and role');
+    return;
+  }
+
+  try {
     if (isEditMode) {
-      updateJob(job);
+      await updateJob(job); // ⬅️ WAIT for backend
       toast.success('Job updated successfully');
     } else {
-      addJob(job);
+      await addJob(job);
       toast.success('Job added successfully');
     }
-    
+
     clearForm();
     navigate('/dashboard');
-  };
+  } catch (err) {
+    // ⬅️ backend error message (like invalid status transition)
+    toast.error(err?.response?.data?.message || 'Something went wrong');
+  }
+};
 
   const clearForm = () => {
     clearCurrent();
