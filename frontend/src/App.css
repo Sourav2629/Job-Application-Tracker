@@ -696,6 +696,125 @@ ul {
     background: #b0bec5;
 }
 
+/* Job View Detail */
+
+.job-detail-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  color: #555;
+  text-decoration: none;
+}
+
+.job-detail-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+/* Header */
+.job-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.job-detail-header h2 {
+  margin: 0;
+}
+
+.job-role {
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* Status badge */
+.status-badge {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.applied {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-badge.interview {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.status-badge.offer {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.rejected {
+  background: #fdecea;
+  color: #c62828;
+}
+
+.status-badge.accepted {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+/* Info grid */
+.job-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.info-item label {
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.info-item p {
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+/* Notes */
+.job-notes {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.job-notes label {
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.job-notes p {
+  margin-top: 0.5rem;
+}
+
+/* Actions */
+.job-detail-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+
 /* Auth Pages Styling */
 .auth-container {
     display: flex;
@@ -1376,3 +1495,4 @@ ul {
     }
 
 } 
+
