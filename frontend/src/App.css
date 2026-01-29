@@ -338,7 +338,6 @@ ul {
 
 .stat-item {
     background-color: #fff;
-    padding: 1rem;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -1375,4 +1374,5 @@ ul {
     .home-hero p {
         font-size: 1rem;
     }
+
 } 
