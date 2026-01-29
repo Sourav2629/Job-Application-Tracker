@@ -28,7 +28,7 @@ module.exports = {
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'https://job-application-tracker-wpbq.onrender.com',
         changeOrigin: true
       }
     }
@@ -38,4 +38,5 @@ module.exports = {
       template: './src/index.html'
     })
   ]
+
 }; 
