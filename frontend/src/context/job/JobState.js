@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import axios from 'axios';
+import api from '../../utils/api';
 import JobContext from './jobContext';
 import jobReducer from './jobReducer';
 import {
@@ -32,7 +32,7 @@ const JobState = props => {
   const getJobs = async () => {
     try {
       setLoading();
-      const res = await axios.get('/api/jobs');
+      const res = await api.get('/jobs');
 
       dispatch({
         type: GET_JOBS,
@@ -50,7 +50,7 @@ const JobState = props => {
   const getJob = async id => {
     try {
       setLoading();
-      const res = await axios.get(`/api/jobs/${id}`);
+      const res = await api.get(`/jobs/${id}`);
 
       dispatch({
         type: GET_JOB,
@@ -74,7 +74,7 @@ const JobState = props => {
 
     try {
       setLoading();
-      const res = await axios.post('/api/jobs', job, config);
+      const res = await api.post('/jobs', job);
 
       dispatch({
         type: ADD_JOB,
@@ -92,7 +92,7 @@ const JobState = props => {
   const deleteJob = async id => {
     try {
       setLoading();
-      await axios.delete(`/api/jobs/${id}`);
+      await api.delete(`/jobs/${id}`);
 
       dispatch({
         type: DELETE_JOB,
@@ -117,7 +117,10 @@ const updateJob = async job => {
 
   try {
     setLoading();
-    const res = await axios.put(`/api/jobs/${job._id}`, job, config);
+    const { _id, user, createdAt, updatedAt, __v, ...jobData } = job;
+
+    const res = await api.put(`/jobs/${_id}`, jobData);
+
 
     dispatch({
       type: UPDATE_JOB,
