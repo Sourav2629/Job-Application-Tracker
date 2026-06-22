@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+import './styles/theme-upgrade.css';
 
 // Components
 import Navbar from './components/layout/Navbar';
@@ -73,4 +74,4 @@ const AppContent = () => {
   );
 };
 
-export default App; 
+export default App;
