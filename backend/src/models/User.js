@@ -30,53 +30,33 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-// Encrypt password using bcrypt
-UserSchema.pre('save', async function(next) {
+// Encrypt password with bcrypt before saving
+UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
   }
-  
+
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (error) {
-    console.error('Password hashing error:', error);
     next(error);
   }
 });
 
-// Sign JWT and return
-UserSchema.methods.getSignedJwtToken = function() {
-  // Use a hardcoded secret to ensure it works
-  const hardcodedSecret = 'hardcodedsecret123456789';
-  
-  try {
-    console.log('Signing JWT token with hardcoded secret');
-    return jwt.sign(
-      { 
-        id: this._id
-      }, 
-      hardcodedSecret, 
-      { expiresIn: '30d' }
-    );
-  } catch (error) {
-    console.error('JWT signing error:', error);
-    throw new Error('JWT signing failed');
-  }
+// Sign a JWT for this user (secret comes from the environment)
+UserSchema.methods.getSignedJwtToken = function () {
+  return jwt.sign(
+    { id: this._id },
+    process.env.JWT_SECRET,
+    { expiresIn: process.env.JWT_EXPIRE || '30d' }
+  );
 };
 
-// Match user entered password to hashed password in database
-UserSchema.methods.matchPassword = async function(enteredPassword) {
-  try {
-    console.log('Comparing passwords...');
-    const isMatch = await bcrypt.compare(enteredPassword, this.password);
-    console.log('Password match result:', isMatch);
-    return isMatch;
-  } catch (error) {
-    console.error('Password comparison error:', error);
-    throw error;
-  }
+// Compare an entered password with the stored hash
+UserSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
 };
 
-module.exports = mongoose.model('User', UserSchema); 
+module.exports = mongoose.model('User', UserSchema);
