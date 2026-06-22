@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Protect routes
+// Protect routes — require a valid JWT
 exports.protect = async (req, res, next) => {
   let token;
 
@@ -9,11 +9,9 @@ exports.protect = async (req, res, next) => {
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
-    // Set token from Bearer token in header
     token = req.headers.authorization.split(' ')[1];
   }
 
-  // Make sure token exists
   if (!token) {
     return res.status(401).json({
       success: false,
@@ -22,15 +20,11 @@ exports.protect = async (req, res, next) => {
   }
 
   try {
-    // Verify token using the same hardcoded secret
-    const hardcodedSecret = 'hardcodedsecret123456789';
-    
-    const decoded = jwt.verify(token, hardcodedSecret);
+    // Verify the token using the secret from the environment
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Find the user by ID
     const user = await User.findById(decoded.id);
-    
-    // Check if user exists
+
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -38,14 +32,12 @@ exports.protect = async (req, res, next) => {
       });
     }
 
-    // Set user in request
     req.user = user;
     next();
   } catch (err) {
-    console.error('JWT verification error:', err.message);
     return res.status(401).json({
       success: false,
       message: 'Not authorized to access this route'
     });
   }
-}; 
+};
