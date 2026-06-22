@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
-  FaBriefcase, 
-  FaChartLine, 
-  FaUserShield, 
-  FaCheckCircle, 
+import {
+  FaBriefcase,
+  FaChartLine,
+  FaUserShield,
+  FaCheckCircle,
   FaSearch,
-  FaBell,
+  FaMagic,
   FaLaptop
 } from 'react-icons/fa';
 import AuthContext from '../context/auth/authContext';
@@ -18,7 +18,7 @@ const Home = () => {
 
   useEffect(() => {
     loadUser();
-    
+
     if (isAuthenticated) {
       navigate('/dashboard');
     }
@@ -29,13 +29,15 @@ const Home = () => {
     <div className='home-container'>
       <section className='home-hero'>
         <div className='hero-content'>
-          <h1>Streamline Your Job Search</h1>
+          <h1>Track Every Job Application in One Place</h1>
           <p className='hero-subtitle'>
-            Organize, track, and optimize your job applications in one powerful platform
+            CareerFlow keeps all your job applications organized — log each one,
+            follow it from Applied to Offer, and skip the manual typing by letting
+            AI fill in the details from any job posting.
           </p>
           <div className='home-buttons'>
             <Link to='/register' className='btn btn-primary'>
-              Get Started
+              Get Started — It's Free
             </Link>
             <Link to='/login' className='btn btn-light'>
               Sign In
@@ -43,26 +45,26 @@ const Home = () => {
           </div>
           <div className='hero-stats'>
             <div className='stat'>
-              <span className='stat-number'>1000+</span>
-              <span className='stat-label'>Job Seekers</span>
+              <span className='stat-number'>AI</span>
+              <span className='stat-label'>Auto-Fill from a Job Post</span>
             </div>
             <div className='stat'>
-              <span className='stat-number'>10k+</span>
-              <span className='stat-label'>Applications Tracked</span>
+              <span className='stat-number'>5</span>
+              <span className='stat-label'>Application Stages</span>
             </div>
             <div className='stat'>
-              <span className='stat-number'>89%</span>
-              <span className='stat-label'>Success Rate</span>
+              <span className='stat-number'>100%</span>
+              <span className='stat-label'>Private to You</span>
             </div>
           </div>
         </div>
         <div className='hero-image'>
-          <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=500&q=80" alt="Job Tracker Dashboard" />
+          <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&h=500&q=80" alt="Job application tracker dashboard" />
         </div>
       </section>
 
       <section className='home-features'>
-        <h2 className='section-title'>Everything You Need to Land Your Dream Job</h2>
+        <h2 className='section-title'>Everything You Need to Stay on Top of Your Job Search</h2>
         <div className='features-grid'>
           <div className='feature'>
             <div className='feature-icon'>
@@ -70,7 +72,19 @@ const Home = () => {
             </div>
             <h3>Application Tracking</h3>
             <p>
-              Keep all your job applications organized in one place with status updates and important details.
+              Save every application with its company, role, location, salary, date,
+              and notes — all in one organized dashboard.
+            </p>
+          </div>
+
+          <div className='feature'>
+            <div className='feature-icon'>
+              <FaMagic />
+            </div>
+            <h3>AI Auto-Fill</h3>
+            <p>
+              Paste a job description and AI pulls out the company, role, location,
+              salary, and a short summary in seconds — then you just review and save.
             </p>
           </div>
 
@@ -78,29 +92,10 @@ const Home = () => {
             <div className='feature-icon'>
               <FaChartLine />
             </div>
-            <h3>Progress Analytics</h3>
+            <h3>Status at a Glance</h3>
             <p>
-              Visualize your job search progress with detailed statistics and insights to optimize your strategy.
-            </p>
-          </div>
-
-          <div className='feature'>
-            <div className='feature-icon'>
-              <FaUserShield />
-            </div>
-            <h3>Secure & Private</h3>
-            <p>
-              Your data is protected with industry-standard security measures and user authentication.
-            </p>
-          </div>
-
-          <div className='feature'>
-            <div className='feature-icon'>
-              <FaBell />
-            </div>
-            <h3>Deadline Reminders</h3>
-            <p>
-              Never miss an interview or follow-up with timely notifications and reminders.
+              Track each application through five stages — Applied, Interview, Offer,
+              Accepted, and Rejected — and see how many sit at each stage.
             </p>
           </div>
 
@@ -108,9 +103,21 @@ const Home = () => {
             <div className='feature-icon'>
               <FaSearch />
             </div>
-            <h3>Advanced Search</h3>
+            <h3>Search, Filter &amp; Sort</h3>
             <p>
-              Quickly find applications with powerful filtering and search capabilities.
+              Instantly search by company or role, filter by status, and sort by date
+              to find any application without scrolling.
+            </p>
+          </div>
+
+          <div className='feature'>
+            <div className='feature-icon'>
+              <FaUserShield />
+            </div>
+            <h3>Secure &amp; Private</h3>
+            <p>
+              Accounts are protected with JWT authentication and hashed passwords, and
+              your applications are visible only to you.
             </p>
           </div>
 
@@ -118,9 +125,9 @@ const Home = () => {
             <div className='feature-icon'>
               <FaLaptop />
             </div>
-            <h3>Works Everywhere</h3>
+            <h3>Works on Any Device</h3>
             <p>
-              Access your job tracker from any device - desktop, tablet, or mobile.
+              A responsive interface that adapts cleanly to desktop, tablet, and mobile.
             </p>
           </div>
         </div>
@@ -129,7 +136,7 @@ const Home = () => {
       <section className='home-cta'>
         <div className='cta-content'>
           <h2>Ready to Organize Your Job Search?</h2>
-          <p>Join thousands of job seekers who have streamlined their application process</p>
+          <p>Create a free account and start tracking your applications in minutes.</p>
           <Link to='/register' className='btn btn-primary btn-lg'>
             Create Free Account
           </Link>
@@ -139,4 +146,4 @@ const Home = () => {
   );
 };
 
-export default Home; 
+export default Home;
