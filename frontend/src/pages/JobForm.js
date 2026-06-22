@@ -1,9 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FaBuilding, FaBriefcase, FaClipboardList, FaCalendarAlt, FaMapMarkerAlt, FaDollarSign, FaStickyNote, FaSave, FaTimes, FaArrowLeft } from 'react-icons/fa';
+import { FaBuilding, FaBriefcase, FaClipboardList, FaCalendarAlt, FaMapMarkerAlt, FaDollarSign, FaStickyNote, FaSave, FaTimes, FaArrowLeft, FaMagic } from 'react-icons/fa';
 import JobContext from '../context/job/jobContext';
 import AuthContext from '../context/auth/authContext';
+import api from '../utils/api';
 
 const JobForm = () => {
   const jobContext = useContext(JobContext);
@@ -11,7 +12,7 @@ const JobForm = () => {
 
   const { addJob, updateJob, current, clearCurrent, getJob, loading } = jobContext;
   const { loadUser } = authContext;
-  
+
   const navigate = useNavigate();
   const { id } = useParams();
   const isEditMode = !!id;
@@ -26,11 +27,15 @@ const JobForm = () => {
     notes: ''
   });
 
+  // --- AI auto-fill state (new) ---
+  const [description, setDescription] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
+
   const { companyName, role, status, appliedDate, location, salary, notes } = job;
 
   useEffect(() => {
     loadUser();
-    
+
     if (isEditMode) {
       getJob(id);
     } else {
@@ -49,6 +54,37 @@ const JobForm = () => {
   }, [current, isEditMode]);
 
   const onChange = e => setJob({ ...job, [e.target.name]: e.target.value });
+
+  // --- AI auto-fill handler (new) ---
+  // Calls the backend, then MERGES the result into the form. It only fills a
+  // field when the AI actually found something, so nothing you typed is lost.
+  const onAutofill = async () => {
+    if (description.trim().length < 20) {
+      toast.error('Paste a bit more of the job description first.');
+      return;
+    }
+
+    setAiLoading(true);
+    try {
+      const res = await api.post('/ai/parse-job', { description });
+      const data = res.data.data;
+
+      setJob(prev => ({
+        ...prev,
+        companyName: data.companyName || prev.companyName,
+        role: data.role || prev.role,
+        location: data.location || prev.location,
+        salary: data.salary || prev.salary,
+        notes: data.notes || prev.notes
+      }));
+
+      toast.success('Filled from the description. Review and edit anything before saving.');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Could not analyse the description.');
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const onSubmit = async e => {
   e.preventDefault();
@@ -93,9 +129,35 @@ const JobForm = () => {
       <Link to='/dashboard' className='btn btn-light back-btn'>
         <FaArrowLeft /> Back to Dashboard
       </Link>
-      
+
       <h1>{isEditMode ? 'Edit Job' : 'Add Job'}</h1>
-      
+
+      {/* ---------- AI auto-fill (new) ---------- */}
+      <div className='ai-assist'>
+        <div className='ai-assist-header'>
+          <span className='ai-badge'><FaMagic /> AI</span>
+          <div>
+            <h3>Auto-fill from a job description</h3>
+            <p>Paste a posting and let AI fill in the details below. You can edit everything after.</p>
+          </div>
+        </div>
+        <textarea
+          className='form-control ai-textarea'
+          placeholder='Paste the full job description here...'
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+          rows={5}
+        />
+        <button
+          type='button'
+          className='btn btn-primary ai-fill-btn'
+          onClick={onAutofill}
+          disabled={aiLoading}
+        >
+          <FaMagic /> {aiLoading ? 'Analysing…' : 'Auto-fill with AI'}
+        </button>
+      </div>
+
       <form onSubmit={onSubmit} className='form'>
         <div className='form-grid'>
           <div className='form-group'>
@@ -115,7 +177,7 @@ const JobForm = () => {
               />
             </div>
           </div>
-          
+
           <div className='form-group'>
             <label htmlFor='role'>
               <FaBriefcase /> Job Role
@@ -134,7 +196,7 @@ const JobForm = () => {
             </div>
           </div>
         </div>
-        
+
         <div className='form-grid'>
           <div className='form-group'>
             <label htmlFor='status'>
@@ -148,7 +210,7 @@ const JobForm = () => {
               <option value='Accepted'>Accepted</option>
             </select>
           </div>
-          
+
           <div className='form-group'>
             <label htmlFor='appliedDate'>
               <FaCalendarAlt /> Applied Date
@@ -165,7 +227,7 @@ const JobForm = () => {
             </div>
           </div>
         </div>
-        
+
         <div className='form-grid'>
           <div className='form-group'>
             <label htmlFor='location'>
@@ -183,7 +245,7 @@ const JobForm = () => {
               />
             </div>
           </div>
-          
+
           <div className='form-group'>
             <label htmlFor='salary'>
               <FaDollarSign /> Salary
@@ -201,7 +263,7 @@ const JobForm = () => {
             </div>
           </div>
         </div>
-        
+
         <div className='form-group'>
           <label htmlFor='notes'>
             <FaStickyNote /> Notes
@@ -215,7 +277,7 @@ const JobForm = () => {
             rows={3}
           />
         </div>
-        
+
         <div className='form-actions'>
           <button
             type='submit'
@@ -223,7 +285,7 @@ const JobForm = () => {
           >
             <FaSave /> {isEditMode ? 'Update Job' : 'Add Job'}
           </button>
-          
+
           {isEditMode && (
             <button
               type='button'
@@ -242,4 +304,4 @@ const JobForm = () => {
   );
 };
 
-export default JobForm; 
+export default JobForm;
