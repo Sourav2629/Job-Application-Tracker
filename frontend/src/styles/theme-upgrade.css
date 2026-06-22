@@ -1,0 +1,259 @@
+/* ============================================================
+   THEME UPGRADE — professional polish layer
+   ------------------------------------------------------------
+   Import this AFTER App.css in App.js:
+       import './App.css';
+       import './styles/theme-upgrade.css';
+   It refines colours, shadows, typography and key components.
+   No markup or behaviour changes — only styling.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Refined indigo brand */
+  --primary-color: #4f46e5;
+  --primary-light: #6366f1;
+  --primary-dark: #4338ca;
+  --secondary-color: #06b6d4;
+
+  /* Slate neutral scale */
+  --dark-color: #0f172a;
+  --light-color: #f8fafc;
+  --card-bg: #ffffff;
+  --border-color: #e7eaf0;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  /* Status colours */
+  --danger-color: #e11d48;
+  --success-color: #059669;
+  --warning-color: #d97706;
+  --info-color: #2563eb;
+
+  /* Soft, layered shadows (the biggest "pro" upgrade) */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 1px 2px rgba(15, 23, 42, 0.06), 0 6px 16px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.14);
+  --box-shadow: var(--shadow-md);
+
+  --border-radius: 12px;
+  --transition: all 0.18s ease;
+  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f4f6fb;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tighter, more confident headings */
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+/* ---------- Navbar: clean, modern app bar ---------- */
+.navbar {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+.navbar a,
+.navbar li {
+  color: var(--text-secondary) !important;
+}
+.navbar .logo a,
+.navbar h1 a {
+  color: var(--primary-color) !important;
+  font-weight: 800;
+}
+.navbar a:hover {
+  color: var(--primary-color) !important;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary {
+  background: var(--gradient-primary) !important;
+  color: #fff !important;
+  border: none;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
+}
+.btn-light {
+  background: #fff !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-secondary) !important;
+}
+.btn-light:hover {
+  background: var(--light-color) !important;
+}
+.btn:active {
+  transform: translateY(0);
+}
+
+/* ---------- Cards, panels, job items ---------- */
+.card,
+.job-item,
+.auth-card,
+.form-container,
+.dashboard-sidebar {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+}
+.job-item {
+  transition: var(--transition);
+  border-left: 3px solid transparent;
+}
+.job-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: #d7dbe5;
+}
+
+/* Status accent stripe down the side of each card */
+.job-item.applied   { border-left-color: #6366f1; }
+.job-item.interview { border-left-color: #f59e0b; }
+.job-item.offer     { border-left-color: #8b5cf6; }
+.job-item.accepted  { border-left-color: #10b981; }
+.job-item.rejected  { border-left-color: #f43f5e; }
+
+/* ---------- Inputs ---------- */
+.form-control,
+.search-input,
+.filter-select {
+  border: 1px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  background: #fff;
+  transition: var(--transition);
+}
+.form-control:focus,
+.search-input:focus,
+.filter-select:focus {
+  outline: none !important;
+  border-color: var(--primary-light) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+}
+
+/* ---------- Status pills ---------- */
+.job-item-status {
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.78rem;
+  padding: 0.28rem 0.7rem;
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.job-item-status.applied   { background: #eef2ff; color: #4338ca; }
+.job-item-status.interview { background: #fff7ed; color: #c2410c; }
+.job-item-status.offer     { background: #f5f3ff; color: #6d28d9; }
+.job-item-status.accepted  { background: #ecfdf5; color: #047857; }
+.job-item-status.rejected  { background: #fff1f2; color: #be123c; }
+
+/* ---------- Stats ---------- */
+.stat-value {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+/* ---------- AI auto-fill panel ---------- */
+.ai-assist {
+  background: linear-gradient(135deg, #faf5ff 0%, #eef2ff 100%);
+  border: 1px solid #e0e7ff;
+  border-radius: var(--border-radius);
+  padding: 1.1rem 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.ai-assist-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+.ai-assist-header h3 {
+  margin: 0;
+  font-size: 1.02rem;
+}
+.ai-assist-header p {
+  margin: 0.15rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+}
+.ai-badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  padding: 0.32rem 0.6rem;
+  border-radius: 8px;
+}
+.ai-textarea {
+  width: 100%;
+  resize: vertical;
+  margin-bottom: 0.75rem;
+}
+.ai-fill-btn {
+  width: 100%;
+}
+.ai-fill-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Landing page (Home) alignment ---------- */
+.home-hero {
+  background: linear-gradient(135deg, #f5f7fb 0%, #eef0fb 100%);
+}
+.hero-image img {
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  border: 6px solid #fff;
+}
+.feature {
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+.feature:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: #d7dbe5;
+}
+/* Fix the old hardcoded blue/cyan so icons match the new indigo */
+.feature-icon {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(79, 70, 229, 0.12)) !important;
+}
+.feature-icon svg {
+  color: var(--primary-color);
+}
+.home-cta {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.10), rgba(6, 182, 212, 0.08)) !important;
+}
+.section-title {
+  letter-spacing: -0.02em;
+}
